@@ -42,6 +42,11 @@ bool Entity::move(Position target, Position speed, Position fieldSize){
   return true;
 }
 
+void Entity::collision(){
+  live = false;
+  if(state == ROBOT) state = SCRAP;
+}
+
 Position Entity::getPos(){
   return pos;
 }

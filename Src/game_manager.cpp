@@ -7,5 +7,6 @@ extern "C"{
 bool GameManager::updateAll(){
   view.update(entMg.getAllViewInfo());
   entMg.update(getChar(), fieldSize);
+  entMg.checkCollision();
   return true;
 }

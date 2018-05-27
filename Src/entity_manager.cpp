@@ -69,7 +69,9 @@ void EntityManager::update(char input, Position fieldSize){
   targetPos.add(player.getPos());
   if(!player.move(targetPos, speed, fieldSize)) return;
   
-  if(fieldData.at(player.getPos().getLinerPos(width)) != NONE) {//プレイヤーは何もないところにのみ移動可
+  
+  if(fieldData.at(player.getPos().getLinerPos(width)) == ROBOT || 
+    fieldData.at(player.getPos().getLinerPos(width)) == SCRAP) {//プレイヤーは何もないところにのみ移動可
     player.move(prePlayerPos, fieldSize);
     return;
   }
@@ -82,6 +84,29 @@ void EntityManager::update(char input, Position fieldSize){
       fieldData.at(e.getPos().getLinerPos(width)) = NONE;
       e.move(player.getPos(), speed, fieldSize);
       fieldData.at(e.getPos().getLinerPos(width)) = e.getState();
+    }
+  }
+}
+
+void EntityManager::checkCollision(){
+  int px = player.getPos().getX();
+  int py = player.getPos().getY();
+  int entNum = static_cast<int>(entityList.size());
+
+  for(auto e: entityList){
+    if(px == e.getPos().getX() && py == e.getPos().getY()){
+      player.collision();
+    }
+  }
+
+  for(int i=0;i<entNum-1;i++){
+    int ex = entityList.at(i).getPos().getX();
+    int ey = entityList.at(i).getPos().getY();
+    for(int j=i+1;j<entNum;j++){
+      if(ex == entityList.at(j).getPos().getX() && ey == entityList.at(j).getPos().getY()){
+        entityList.at(i).collision();
+        entityList.at(j).collision();
+      }
     }
   }
 }

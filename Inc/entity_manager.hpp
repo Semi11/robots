@@ -15,4 +15,5 @@ class EntityManager{
   std::vector<Entity> getAllEntity();
   std::vector<ViewInfo> getAllViewInfo();
   void update(char input, Position fieldSize);
+  void checkCollision();
 };
