@@ -45,3 +45,29 @@ std::vector<ViewInfo> EntityManager::getAllViewInfo(){
 
   return viewInfoList;
 }
+
+void EntityManager::update(char input, Position fieldSize){
+  Position targetPos;
+  Position speed = Position(1,1);
+
+  //プレイヤーの移動
+  switch(input){
+    case 'q':targetPos = Position(-1,-1);break;
+    case 'w':targetPos = Position(0,-1);break;
+    case 'e':targetPos = Position(1,-1);break;
+    case 'a':targetPos = Position(-1,0);break;
+    case 's':targetPos = Position(0,0);break;
+    case 'd':targetPos = Position(1,0);break;
+    case 'z':targetPos = Position(-1,1);break;
+    case 'x':targetPos = Position(0,1);break;
+    case 'c':targetPos = Position(1,1);break;
+    default:return;
+  }
+
+  if(!player.move(targetPos.add(player.getPos()), speed, fieldSize)) return;
+  
+  //ロボットの移動
+  for(auto &e: entityList){
+    e.move(player.getPos(), speed, fieldSize);
+  }
+}

@@ -6,6 +6,10 @@ Position Position::add(int px, int py){
   return Position(x,y);
 }
 
+Position Position::add(Position p){
+  return add(p.getX(), p.getY());
+}
+
 int Position::getX(void){
   return x;
 }

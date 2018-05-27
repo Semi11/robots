@@ -15,7 +15,9 @@ class Entity{
   Entity(EntityState s):Entity(Position(), s){}
   Entity():Entity(NONE){}
   void init(Position pos, EntityState s);
-  void move(Position pos);
+  bool move(Position target, Position fieldSize);
+  bool move(Position target, Position speed, Position fieldSize);
   void collision();
   ViewInfo getViewInfo();
+  Position getPos();
 };

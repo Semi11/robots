@@ -14,5 +14,5 @@ class EntityManager{
   EntityManager(int robotNum, Position fieldSize);
   std::vector<Entity> getAllEntity();
   std::vector<ViewInfo> getAllViewInfo();
-  void update();
+  void update(char input, Position fieldSize);
 };
