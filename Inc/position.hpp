@@ -7,10 +7,11 @@ class Position{
   
   public:
   Position(int x, int y):x(x),y(y){}
-  Position():x(0),y(0){}
-  void set(int x, int y);
-  void set(Position Pos);
-  void getX(void);
-  void getY(void);
+  Position(int pos, Position fieldSize):Position(pos % fieldSize.getX(), pos / fieldSize.getX()){}
+  Position():Position(0,0){}
+  Position add(int px, int py);
+  int getX(void);
+  int getY(void);
+  int getLinerPos(int width){return y * width + x;}
 };
 

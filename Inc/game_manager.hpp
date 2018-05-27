@@ -10,7 +10,7 @@ class GameManager{
   View view;
 
   public:
-  GameManager(int entNum ,Position fieldSize):entMg(entNum), view(fieldSize){}
+  GameManager(int entNum ,Position fieldSize):entMg(entNum, fieldSize), view(fieldSize){}
   bool updateAll();
 
 };

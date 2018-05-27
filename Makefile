@@ -1,5 +1,5 @@
 COMPILER = g++
-CFLAGS  = -g -MMD -MP -Wall -std=c++11
+CFLAGS  = -g -MMD -MP -Wall -std=c++11 
 INCLUDE = -I./Inc
 TARGET  = ./$(shell basename `readlink -f .`)
 SRCDIR  = ./Src

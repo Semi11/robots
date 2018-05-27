@@ -7,9 +7,11 @@
 class EntityManager{
   private:
   std::vector<Entity> entityList; 
+  std::vector<EntityState> fieldData;
+  Entity player;
 
   public:
-  EntityManager(int entityNum):entityList(entityNum){}
+  EntityManager(int robotNum, Position fieldSize);
   std::vector<Entity> getAllEntity();
   std::vector<ViewInfo> getAllViewInfo();
   void update();

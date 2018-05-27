@@ -1,11 +1,12 @@
 #pragma once
 
 #include "position.hpp"
-#include "view_state.hpp"
+#include "entity_state.hpp"
 
 struct ViewInfo{
   public: 
   Position pos;
-  ViewState viewState;
-  ViewInfo(Position pos ,ViewState vs):pos(pos), viewState(vs){}
+  EntityState entityState;
+  ViewInfo(Position pos ,EntityState es):pos(pos), entityState(es){}
+  ViewInfo(){ViewInfo(Position(0,0), NONE);}
 };

@@ -1,16 +1,21 @@
 #pragma once
 
 #include "position.hpp"
-#include "view_state.hpp"
+#include "entity_state.hpp"
+#include "view_info.hpp"
 
 class Entity{
   private:
   Position pos; 
   bool live;
-  ViewState viewState;
+  EntityState state;
   
   public:
-  Entity(){};
+  Entity(Position pos, EntityState s):pos(pos),live(true),state(s){}
+  Entity(EntityState s):Entity(Position(), s){}
+  Entity():Entity(NONE){}
+  void init(Position pos, EntityState s);
   void move(Position pos);
   void collision();
+  ViewInfo getViewInfo();
 };
