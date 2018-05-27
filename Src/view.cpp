@@ -29,4 +29,6 @@ void View::update(std::vector<ViewInfo> viewInfoList){
     dispStr(v.pos.add(WALL_TICK,WALL_TICK), VIEW_ENTITY_LIST.at(v.entityState));
   }
 
+  moveCur(Position(0,size.getY()+WALL_TICK*2));
+
 }

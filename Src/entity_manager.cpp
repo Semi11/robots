@@ -49,6 +49,8 @@ std::vector<ViewInfo> EntityManager::getAllViewInfo(){
 void EntityManager::update(char input, Position fieldSize){
   Position targetPos;
   Position speed = Position(1,1);
+  Position prePlayerPos = player.getPos();
+  int width = fieldSize.getX();
 
   //プレイヤーの移動
   switch(input){
@@ -64,10 +66,22 @@ void EntityManager::update(char input, Position fieldSize){
     default:return;
   }
 
-  if(!player.move(targetPos.add(player.getPos()), speed, fieldSize)) return;
+  targetPos.add(player.getPos());
+  if(!player.move(targetPos, speed, fieldSize)) return;
   
+  if(fieldData.at(player.getPos().getLinerPos(width)) != NONE) {//プレイヤーは何もないところにのみ移動可
+    player.move(prePlayerPos, fieldSize);
+    return;
+  }
+  fieldData.at(prePlayerPos.getLinerPos(width)) = NONE;
+  fieldData.at(player.getPos().getLinerPos(width)) = PLAYER;
+
   //ロボットの移動
   for(auto &e: entityList){
-    e.move(player.getPos(), speed, fieldSize);
+    if(e.isAlive()){
+      fieldData.at(e.getPos().getLinerPos(width)) = NONE;
+      e.move(player.getPos(), speed, fieldSize);
+      fieldData.at(e.getPos().getLinerPos(width)) = e.getState();
+    }
   }
 }

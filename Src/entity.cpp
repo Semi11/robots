@@ -10,6 +10,20 @@ ViewInfo Entity::getViewInfo(){
   return ViewInfo(pos, state);
 }
 
+bool Entity::move(Position target, Position fieldSize){
+  if(!live)return false; 
+  Position pre = pos;
+  
+  pos = target;
+  
+  if(pos.getX() < 0 || pos.getX() >= fieldSize.getX() || pos.getY() < 0 || pos.getY() >= fieldSize.getY()){
+    pos = pre;
+    return false;
+  }
+
+  return true;
+}
+
 bool Entity::move(Position target, Position speed, Position fieldSize){
   if(!live)return false; 
   Position pre = pos;
@@ -30,4 +44,12 @@ bool Entity::move(Position target, Position speed, Position fieldSize){
 
 Position Entity::getPos(){
   return pos;
+}
+
+EntityState Entity::getState(){
+  return state;
+}
+
+bool Entity::isAlive(){
+  return live;
 }

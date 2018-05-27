@@ -5,7 +5,7 @@ extern "C"{
 }
 
 bool GameManager::updateAll(){
-  entMg.update(getChar(), fieldSize);
   view.update(entMg.getAllViewInfo());
+  entMg.update(getChar(), fieldSize);
   return true;
 }

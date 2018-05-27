@@ -20,4 +20,6 @@ class Entity{
   void collision();
   ViewInfo getViewInfo();
   Position getPos();
+  EntityState getState();
+  bool isAlive();
 };
