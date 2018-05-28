@@ -4,7 +4,7 @@ View::View(Position size):size(size){
   
 }
 
-void View::update(std::vector<ViewInfo> viewInfoList){
+void View::update(std::vector<ViewInfo> viewInfoList, int level, int score){
   //画面クリア
   clear();
 
@@ -30,5 +30,6 @@ void View::update(std::vector<ViewInfo> viewInfoList){
   }
 
   moveCur(Position(0,size.getY()+WALL_TICK*2));
+  std::cout << "(level:" << level << " score:" << score << "):?";
 
 }

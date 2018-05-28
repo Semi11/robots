@@ -3,7 +3,7 @@
 
 int main(void){
   
-  GameManager gm(5, Position(20,15));
+  GameManager gm(1, Position(20,15));
 
   while(gm.updateAll());
 

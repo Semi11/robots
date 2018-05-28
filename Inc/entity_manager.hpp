@@ -16,4 +16,6 @@ class EntityManager{
   std::vector<ViewInfo> getAllViewInfo();
   void update(char input, Position fieldSize);
   void checkCollision();
+  bool isPlayerAlive();
+  bool existsRobot();
 };

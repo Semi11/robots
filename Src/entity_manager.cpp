@@ -110,3 +110,14 @@ void EntityManager::checkCollision(){
     }
   }
 }
+
+bool EntityManager::isPlayerAlive(){
+  return player.isAlive();
+}
+
+bool EntityManager::existsRobot(){
+  for(auto e: entityList){
+    if(e.getState() == ROBOT) return true;
+  }
+  return false;
+}

@@ -16,7 +16,7 @@ class View{
 
   public:
   View(Position size);
-  void update(std::vector<ViewInfo> viewInfoList);
+  void update(std::vector<ViewInfo> viewInfoList, int level, int score);
   void clear(){std::cout<< "\033[2J";}
   void moveCur(Position pos){
     std::cout<< "\033[" << pos.getY()+1 << ";" << pos.getX()+1 << "H"; //端末の原点は(1,1)のため補正をかける

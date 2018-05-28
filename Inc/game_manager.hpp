@@ -6,12 +6,17 @@
 
 class GameManager{
   private:
+  const int BASE_ROBOT_NUM = 5;
+  const int MAX_ROBOT_NUM = 40;
+  const int LEVEL_SCORE = 10;
   EntityManager entMg;
   View view;
   Position fieldSize;
+  int level;
+  int score;
 
   public:
-  GameManager(int entNum ,Position fieldSize):entMg(entNum, fieldSize), view(fieldSize),fieldSize(fieldSize){}
+  GameManager(int level,Position fieldSize):entMg(level * BASE_ROBOT_NUM, fieldSize), view(fieldSize),fieldSize(fieldSize), level(level), score(0){}
   bool updateAll();
 
 };
