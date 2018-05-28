@@ -2,8 +2,7 @@
 #include "position.hpp"
 
 int main(void){
-  
-  GameManager gm(1, Position(20,15));
+  GameManager gm(1, Position(40,30));
 
   while(gm.updateAll());
 

@@ -1,8 +1,8 @@
-#include <random>
 #include <algorithm>
 #include "entity_manager.hpp"
+#include "random_generator.hpp"
 
-EntityManager::EntityManager(int robotNum, Position fieldSize): entityList(robotNum), fieldData(fieldSize.getLinerPos(fieldSize.getX()-1)){
+EntityManager::EntityManager(int robotNum, Position fieldSize): entityList(robotNum), fieldData(fieldSize.getX() * fieldSize.getY()){
   int linerFieldSize = static_cast<int>(fieldData.size());
 
   //各エンティティの初期位置を決定
@@ -13,9 +13,7 @@ EntityManager::EntityManager(int robotNum, Position fieldSize): entityList(robot
   }
 
   //シャッフル
-  std::random_device seed_gen;
-  std::mt19937 engine(seed_gen());
-  std::shuffle(fieldData.begin(), fieldData.end(), engine);
+  std::shuffle(fieldData.begin(), fieldData.end(), RandomGenerator::get());
   
   //決定された初期位置からエンティティを作成
   int cnt=0;
@@ -47,38 +45,46 @@ std::vector<ViewInfo> EntityManager::getAllViewInfo(){
 }
 
 void EntityManager::update(char input, Position fieldSize){
-  Position targetPos;
+  Position targetPos = Position(0,0);
   Position speed = Position(1,1);
   Position prePlayerPos = player.getPos();
   int width = fieldSize.getX();
 
   //プレイヤーの移動
-  switch(input){
-    case 'q':targetPos = Position(-1,-1);break;
-    case 'w':targetPos = Position(0,-1);break;
-    case 'e':targetPos = Position(1,-1);break;
-    case 'a':targetPos = Position(-1,0);break;
-    case 's':targetPos = Position(0,0);break;
-    case 'd':targetPos = Position(1,0);break;
-    case 'z':targetPos = Position(-1,1);break;
-    case 'x':targetPos = Position(0,1);break;
-    case 'c':targetPos = Position(1,1);break;
-    default:return;
+  if(input != 'r'){
+    switch(input){
+      case 'q':targetPos = Position(-1,-1);break;
+      case 'w':targetPos = Position(0,-1);break;
+      case 'e':targetPos = Position(1,-1);break;
+      case 'a':targetPos = Position(-1,0);break;
+      case 's':targetPos = Position(0,0);break;
+      case 'd':targetPos = Position(1,0);break;
+      case 'z':targetPos = Position(-1,1);break;
+      case 'x':targetPos = Position(0,1);break;
+      case 'c':targetPos = Position(1,1);break;
+      case 'r':               break;
+      default:return;
+    }
+
+    targetPos.add(player.getPos());
+    if(!player.move(targetPos, speed, fieldSize)) return;
+
+
+    if(fieldData.at(player.getPos().getLinerPos(width)) == ROBOT || 
+        fieldData.at(player.getPos().getLinerPos(width)) == SCRAP) {//プレイヤーは何もないところにのみ移動可
+      player.move(prePlayerPos, fieldSize);
+      return;
+    }
+
+  }else{
+    player.move(getRandomPos(fieldData, fieldSize), fieldSize);
   }
 
-  targetPos.add(player.getPos());
-  if(!player.move(targetPos, speed, fieldSize)) return;
-  
-  
-  if(fieldData.at(player.getPos().getLinerPos(width)) == ROBOT || 
-    fieldData.at(player.getPos().getLinerPos(width)) == SCRAP) {//プレイヤーは何もないところにのみ移動可
-    player.move(prePlayerPos, fieldSize);
-    return;
-  }
   fieldData.at(prePlayerPos.getLinerPos(width)) = NONE;
   fieldData.at(player.getPos().getLinerPos(width)) = PLAYER;
 
   //ロボットの移動
+  speed = Position(1,1);
   for(auto &e: entityList){
     if(e.isAlive()){
       fieldData.at(e.getPos().getLinerPos(width)) = NONE;
@@ -120,4 +126,16 @@ bool EntityManager::existsRobot(){
     if(e.getState() == ROBOT) return true;
   }
   return false;
+}
+
+//フィールドの何もない座標をランダムで取得
+Position EntityManager::getRandomPos(std::vector<EntityState> bs, Position fs){
+  std::vector<int> nonePosList;
+  
+  for(int i=0; i<static_cast<int>(bs.size()); i++){
+    if(bs.at(i) == NONE) nonePosList.push_back(i);  
+  }
+  
+  std::uniform_int_distribution<> ranNum(0, static_cast<int>(nonePosList.size())-1);
+  return Position(nonePosList.at(ranNum(RandomGenerator::get())), fs);
 }

@@ -18,4 +18,5 @@ class EntityManager{
   void checkCollision();
   bool isPlayerAlive();
   bool existsRobot();
+  Position getRandomPos(std::vector<EntityState> bs, Position fs);
 };
