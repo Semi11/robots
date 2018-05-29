@@ -3,6 +3,7 @@
 #include <vector>
 #include "entity.hpp"
 #include "view_info.hpp"
+#include "input_data.hpp"
 
 class EntityManager{
   private:
@@ -14,7 +15,7 @@ class EntityManager{
   EntityManager(int robotNum, Position fieldSize);
   std::vector<Entity> getAllEntity();
   std::vector<ViewInfo> getAllViewInfo();
-  void update(char input, Position fieldSize);
+  void update(InputData input, Position fieldSize);
   int checkCollision();
   bool isPlayerAlive();
   bool existsRobot();

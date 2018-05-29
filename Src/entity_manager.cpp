@@ -44,25 +44,24 @@ std::vector<ViewInfo> EntityManager::getAllViewInfo(){
   return viewInfoList;
 }
 
-void EntityManager::update(char input, Position fieldSize){
+void EntityManager::update(InputData input, Position fieldSize){
   Position targetPos = Position(0,0);
   Position speed = Position(1,1);
   Position prePlayerPos = player.getPos();
   int width = fieldSize.getX();
 
   //プレイヤーの移動
-  if(input != 'r'){
+  if(input != WARP){
     switch(input){
-      case 'q':targetPos = Position(-1,-1);break;
-      case 'w':targetPos = Position(0,-1);break;
-      case 'e':targetPos = Position(1,-1);break;
-      case 'a':targetPos = Position(-1,0);break;
-      case 's':targetPos = Position(0,0);break;
-      case 'd':targetPos = Position(1,0);break;
-      case 'z':targetPos = Position(-1,1);break;
-      case 'x':targetPos = Position(0,1);break;
-      case 'c':targetPos = Position(1,1);break;
-      case 'r':               break;
+      case    UPLEFT: targetPos = Position(-1,-1);break;
+      case        UP: targetPos = Position(0,-1);break;
+      case   UPRIGHT: targetPos = Position(1,-1);break;
+      case      LEFT: targetPos = Position(-1,0);break;
+      case    CENTER: targetPos = Position(0,0);break;
+      case     RIGHT: targetPos = Position(1,0);break;
+      case  DOWNLEFT: targetPos = Position(-1,1);break;
+      case      DOWN: targetPos = Position(0,1);break;
+      case DOWNRIGHT: targetPos = Position(1,1);break;
       default:return;
     }
 

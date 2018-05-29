@@ -11,7 +11,7 @@ GameManager::GameManager(int level,Position fieldSize):entMg(level * BASE_ROBOT_
 }
 
 bool GameManager::updateAll(){
-  entMg.update(getChar(), fieldSize);
+  entMg.update(convertInputData(getChar()), fieldSize);
   score += entMg.checkCollision();
 
   if(!entMg.existsRobot()){
@@ -23,4 +23,30 @@ bool GameManager::updateAll(){
   view.update(entMg.getAllViewInfo(), level, score);
 
   return entMg.isPlayerAlive();
+}
+
+InputData GameManager::convertInputData(char c){
+  switch(c){
+    case 'q':
+    case '7':return UPLEFT;
+    case 'w':
+    case '8':return UP;
+    case 'e':
+    case '9':return UPRIGHT;
+    case 'a':
+    case '4':return LEFT;
+    case 's':
+    case '5':return CENTER;
+    case 'd':
+    case '6':return RIGHT;
+    case 'z':
+    case '1':return DOWNLEFT;
+    case 'x':
+    case '2':return DOWN;
+    case 'c':
+    case '3':return DOWNRIGHT;
+    case 'r':
+    case '0':return WARP;
+    default:return ERROR;
+  }
 }

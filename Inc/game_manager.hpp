@@ -3,6 +3,7 @@
 #include "entity_manager.hpp"
 #include "view.hpp"
 #include "position.hpp"
+#include "input_data.hpp"
 
 class GameManager{
   private:
@@ -18,5 +19,5 @@ class GameManager{
   public:
   GameManager(int level,Position fieldSize);
   bool updateAll();
-
+  static InputData convertInputData(char c);
 };
