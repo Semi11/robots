@@ -16,7 +16,7 @@ class GameManager{
   int score;
 
   public:
-  GameManager(int level,Position fieldSize):entMg(level * BASE_ROBOT_NUM, fieldSize), view(fieldSize),fieldSize(fieldSize), level(level), score(0){}
+  GameManager(int level,Position fieldSize);
   bool updateAll();
 
 };
