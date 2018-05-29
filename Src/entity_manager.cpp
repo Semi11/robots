@@ -76,7 +76,7 @@ void EntityManager::update(InputData input, Position fieldSize){
     }
 
   }else{
-    player.move(getRandomPos(fieldData, fieldSize), fieldSize);
+    player.move(getRandomPos(fieldSize), fieldSize);
   }
 
   fieldData.at(prePlayerPos.getLinerPos(width)) = NONE;
@@ -133,13 +133,13 @@ bool EntityManager::existsRobot(){
 }
 
 //フィールドの何もない座標をランダムで取得
-Position EntityManager::getRandomPos(std::vector<EntityState> bs, Position fs){
+Position EntityManager::getRandomPos(Position fieldSize){
   std::vector<int> nonePosList;
   
-  for(int i=0; i<static_cast<int>(bs.size()); i++){
-    if(bs.at(i) == NONE) nonePosList.push_back(i);  
+  for(int i=0; i<static_cast<int>(fieldData.size()); i++){
+    if(fieldData.at(i) == NONE) nonePosList.push_back(i);  
   }
   
   std::uniform_int_distribution<> ranNum(0, static_cast<int>(nonePosList.size())-1);
-  return Position(nonePosList.at(ranNum(RandomGenerator::get())), fs);
+  return Position(nonePosList.at(ranNum(RandomGenerator::get())), fieldSize);
 }
