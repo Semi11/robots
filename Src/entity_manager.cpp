@@ -94,10 +94,11 @@ void EntityManager::update(char input, Position fieldSize){
   }
 }
 
-void EntityManager::checkCollision(){
+int EntityManager::checkCollision(){
   int px = player.getPos().getX();
   int py = player.getPos().getY();
   int entNum = static_cast<int>(entityList.size());
+  int score = 0;
 
   for(auto e: entityList){
     if(px == e.getPos().getX() && py == e.getPos().getY()){
@@ -110,11 +111,15 @@ void EntityManager::checkCollision(){
     int ey = entityList.at(i).getPos().getY();
     for(int j=i+1;j<entNum;j++){
       if(ex == entityList.at(j).getPos().getX() && ey == entityList.at(j).getPos().getY()){
+        if(entityList.at(i).getState() == ROBOT) score++;
+        if(entityList.at(j).getState() == ROBOT) score++;
         entityList.at(i).collision();
         entityList.at(j).collision();
       }
     }
   }
+
+  return score;
 }
 
 bool EntityManager::isPlayerAlive(){

@@ -8,7 +8,7 @@ extern "C"{
 bool GameManager::updateAll(){
   view.update(entMg.getAllViewInfo(), level, score);
   entMg.update(getChar(), fieldSize);
-  entMg.checkCollision();
+  score += entMg.checkCollision();
 
   if(!entMg.existsRobot()){
     score += level * LEVEL_SCORE;
